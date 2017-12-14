@@ -11,10 +11,10 @@
         </div>
 
         <div class="page-content">
-            
+
             <div class="page-header">
                 <h1>
-                    Pemesanan Bahan Baku 
+                    Pemesanan Bahan Baku
                     <small>
                         <i class="ace-icon fa fa-angle-double-right"></i>
                         Pengolahan Data
@@ -26,7 +26,12 @@
                 <div class="col-xs-12">
                     <!-- PAGE CONTENT BEGINS -->
 
-                    <?php
+                    <?php if (!isset($_GET['faktur']) AND !isset($_GET['form'])) {
+                        ?>
+                        <a href="index.php?menu=pemesanan&form=true" class="btn btn-default"><i class="fa fa-plus"></i> Pemesanan</a>
+                        <?php
+                    }
+
                     if (isset($_GET['faktur'])) { ?>
 
                       <div class="well">
@@ -147,7 +152,7 @@
                                                                       <a href="#"><?= $nama_bahan_baku ?></a>
                                                                   </td>
                                                                   <td class="hidden-xs">
-                                                                      <?= $jumlah_pemesanan.' '.$satuan ?> 
+                                                                      <?= $jumlah_pemesanan.' '.$satuan ?>
                                                                   </td>
                                                                   <td class="hidden-480">
                                                                       <?= 'Rp.'.Rupiah($harga_bahan_baku) ?></td>
@@ -182,40 +187,143 @@
                       </div>
                       <?php
                     }else{
-                    ?>
 
-                        <div class="clearfix">
-                            <div class="pull-right tableTools-container"></div>
-                        </div>
-                        <div class="table-header">
-                            Daftar data "Pemesanan Bahan Baku"
-                        </div>
-                        <!-- div.table-responsive -->
+                        if (isset($_GET['form'])) {
+                            if (empty($_GET['peramalan'])) {
+                                ?>
+                                <div class="well">
 
-                        <!-- div.dataTables_borderWrap -->
-                        <div class="table table-responsive">
-                            <table id="mytable" class="display" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr class="">
-                                        <th width="5%" class="text-center">No</th>
-                                        <th width="15%" class="text-left">Nomor Faktur</th>
-                                        <th width="10%" class="text-left">Supplier</th>
-                                        <th width="10%" class="text-left">Pegawai</th>
-                                        <th width="12%" class="text-center">Status Pemesanan</th>
-                                        <th width="15%" class="text-center">Tanggal</th>
-                                        <th width="12%" class="text-center"></th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
+                                    <a href="#" data-toggle="collapse" data-target=".byperamalan"><i class="ace-icon fa fa-plus bigger-110"></i> <b>Pesan bahan baku berdasarkan peramalan</b></a>
 
-                        <?php
+                                    <div id="" class="collapse byperamalan">
+                                        <form action="index.php?menu=pemesanan&form=true&peramalan=true" method="post" class="myform">
+
+                                            <!-- hidden status hapus false -->
+                                            <input type="hidden" name="peramalan" value="true" class="form-control" placeholder="" readonly>
+
+                                            <table class="table table-renponsive">
+                                                <tr>
+                                                    <td width="15%">Periode</td>
+                                                    <td>
+                                                        <select name="bulan" class="form-control select2" required>
+                                                            <option value="01">Januari</option>
+                                                            <option value="02">Februari</option>
+                                                            <option value="03">Maret</option>
+                                                            <option value="04">April</option>
+                                                            <option value="05">Mei</option>
+                                                            <option value="06">Juni</option>
+                                                            <option value="07">Juli</option>
+                                                            <option value="08">Agustus</option>
+                                                            <option value="09">September</option>
+                                                            <option value="10">Oktober</option>
+                                                            <option value="11">November</option>
+                                                            <option value="12">Desember</option>
+                                                        </select>
+                                                        <select name="tahun" class="form-control select2" required>
+                                                            <option value="2017">2017</option>
+                                                            <option value="2018">2018</option>
+                                                        </select>
+                                                        <div class="btn-group">
+                                                            <button type="submit" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-arrow-right bigger-120"></i> Lanjutkan</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+
+                                    <hr/>
+                                    <a href="#" data-toggle="collapse" data-target=".manual"><i class="ace-icon fa fa-plus bigger-110"></i> <b>Pesan bahan baku secara manual</b></a>
+
+                                    <div id="" class="collapse manual">
+                                        <form action="../action/bahan_baku.php" method="post" class="myform">
+
+                                            <!-- hidden status hapus false -->
+                                            <input type="hidden" name="hapus" value="0" class="form-control" placeholder="" readonly>
+
+                                            <table class="table table-renponsive">
+                                                <caption>Masukkan Data Bahan Baku:</caption>
+                                                <tr>
+                                                    <td width="15%">ID Bahan Baku</td>
+                                                    <td><input type="text" name="id_bahan_baku" value="" class="form-control" placeholder="ID akan dibuat secara otomatis" readonly></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="15%">Nama Bahan Baku</td>
+                                                    <td><input type="text" name="nama_bahan_baku" value="" class="form-control" placeholder="Misal: Tepung" required></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="15%">Satuan</td>
+                                                    <td><input type="text" name="satuan" value="" class="form-control" placeholder="Misal: kilogram" required></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <div class="btn-group">
+                                                            <button type="submit" class="btn btn-sm btn-primary"><i class="ace-icon fa fa-save bigger-120"></i> Simpan</button>
+                                                            <button type="reset" class="btn btn-sm btn-default"><i class="ace-icon fa fa-refresh bigger-120"></i> Reset</button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </form>
+                                    </div>
+                                </div>
+                                <?php
+                            }else{
+
+                                $bulan      = $_POST['bulan'];
+                                $tahun      = $_POST['tahun'];
+                                $periode    = $bulan.'-'.$tahun;
+
+                                // retrieve data dari API
+                                $file = file_get_contents($url_api."pemesanan_bahan_baku_berdasarkan_peramalan.php?peramalan=true&periode=".$periode);
+                                $json = json_decode($file, true);
+                                $i=0;
+                                while ($i < count($json['data'])) {
+                                    $id_produk[$i]          = $json['data'][$i]['id_produk'];
+                                    $hasil_peramalan[$i]    = $json['data'][$i]['hasil_peramalan'];
+
+                                    echo "id_produk : ".$id_produk[$i].' sebanyak '.$hasil_peramalan[$i].'<br>';
+
+                                    $i++;
+                                }
+
+                            }
+                        }else{
+                            ?>
+
+                            <div class="clearfix">
+                                <div class="pull-right tableTools-container"></div>
+                            </div>
+                            <div class="table-header">
+                                Daftar data "Pemesanan Bahan Baku"
+                            </div>
+                            <!-- div.table-responsive -->
+
+                            <!-- div.dataTables_borderWrap -->
+                            <div class="table table-responsive">
+                                <table id="mytable" class="display" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr class="">
+                                            <th width="5%" class="text-center">No</th>
+                                            <th width="15%" class="text-left">Nomor Faktur</th>
+                                            <th width="10%" class="text-left">Supplier</th>
+                                            <th width="10%" class="text-left">Pegawai</th>
+                                            <th width="12%" class="text-center">Status Pemesanan</th>
+                                            <th width="15%" class="text-center">Tanggal</th>
+                                            <th width="12%" class="text-center"></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+
+                            <?php
+                        }
                     } ?>
 
                     <!-- loading -->
                     <center><div id="loading"></div></center>
                     <div id="result"></div>
-                    
+
                     <!-- PAGE CONTENT ENDS -->
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -240,7 +348,7 @@
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> Hapus</button>
                 </div>
-            </form>    
+            </form>
         </div>
     </div>
 </div>
@@ -249,12 +357,12 @@
     function detail(nomor_faktur){
 
     }
-    
+
     function hapus(nomor_faktur){
         $('.modal-body input[name=nomor_faktur]').val(nomor_faktur);
     }
 
-    // LOADING SCREEN WHILE PROCESS SAVING/UPDATE/DELETE DATA 
+    // LOADING SCREEN WHILE PROCESS SAVING/UPDATE/DELETE DATA
     $(document).ready(function(){
 
         $('#mytable').DataTable({
@@ -282,8 +390,3 @@
 
     });
 </script>
-
-
-
-
-
