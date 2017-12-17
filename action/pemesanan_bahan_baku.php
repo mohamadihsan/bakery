@@ -1,11 +1,12 @@
 <?php
+error_reporting(0);
 // buka koneksi
 require_once '../config/connection.php';
 session_start();
 
 if(mysqli_escape_string($conn, trim($_POST['hapus']))=='1'){
     $nomor_faktur       = mysqli_escape_string($conn, trim($_POST['nomor_faktur']));
-    $status_pemesanan   = 'DK';  
+    $status_pemesanan   = 'DK';
 
     // perbaharui data
     $sql = "UPDATE pemesanan_bahan_baku
@@ -17,6 +18,50 @@ if(mysqli_escape_string($conn, trim($_POST['hapus']))=='1'){
         $pesan_gagal = "Gagal terhubung dengan server";
     }
 }else{
+    $nomor_faktur = '171217FAK00002P';
+    $id_supplier  = $_POST['id_supplier'];
+    $id_bahan_baku  = $_POST['id_bahan_baku'];
+    $jumlah_pemesanan  = $_POST['jumlah_pemesanan'];
+    $id_pegawai  = $_SESSION['id_pegawai'];
+    $status_pemesanan = 'SP';
+    $status_pembayaran = '1';
+
+    for ($i=0; $i < count($id_supplier); $i++) {
+        if ($id_supplier[$i] != '') {
+            // insert data master pemesanan
+            if ($id_supplier[$i] != $id_supplier[$i-1]) {
+                $sql = "INSERT INTO pemesanan_bahan_baku(nomor_faktur, id_supplier, id_pegawai, status_pemesanan, status_pembayaran)
+                        VALUES('$nomor_faktur','$id_supplier[$i]','$id_pegawai','$status_pemesanan','$status_pembayaran')";
+                mysqli_query($conn, $sql);
+
+                $sql = "SELECT nomor_faktur FROM pemesanan_bahan_baku ORDER BY nomor_faktur DESC LIMIT 1";
+                $result = mysqli_query($conn, $sql);
+                $row = mysqli_fetch_assoc($result);
+                $nomor_faktur = $row['nomor_faktur'];
+            }
+
+            // retirieve harga barang
+            $sql = "SELECT harga FROM detail_supplier WHERE id_bahan_baku='$id_bahan_baku[$i]' AND id_supplier='$id_supplier[$i]'";
+            $result = mysqli_query($conn, $sql);
+            if (mysqli_num_rows($result)>0) {
+                $row = mysqli_fetch_assoc($result);
+                $harga_bahan_baku[$i] = $row['harga'];
+            }else{
+                $harga_bahan_baku[$i] = 0;
+            }
+
+            // insert data detail pemesanan
+            $sql = "INSERT INTO detail_pemesanan_bahan_baku(nomor_faktur, id_bahan_baku, jumlah_pemesanan, harga_bahan_baku)
+                    VALUES('$nomor_faktur','$id_bahan_baku[$i]','$jumlah_pemesanan[$i]','$harga_bahan_baku[$i]')";
+            if(mysqli_query($conn, $sql)){
+                $pesan_berhasil = "Data berhasil disimpan";
+            }else{
+                $pesan_gagal = "Data gagal disimpan";
+            }
+        }else{
+            $pesan_gagal = "Data gagal disimpan";
+        }
+    }
 
 }
 
