@@ -84,7 +84,7 @@
 
 			<b class="arrow"></b>
 		</li>
-		
+
 	</ul><!-- /.nav-list -->
 
 	<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
