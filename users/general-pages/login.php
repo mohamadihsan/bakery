@@ -19,7 +19,7 @@
 		<link rel="stylesheet" href="assets/css/ace.min.css" />
 
 		<link rel="stylesheet" href="assets/css/ace-rtl.min.css" />
-		
+
 		<script src="assets/js/jquery-2.1.4.min.js"></script>
 		<!-- gritter notification -->
 		<link rel="stylesheet" href="assets/css/jquery.gritter.min.css" />
@@ -86,7 +86,7 @@
 															if($gagal_login==false) {
 																echo "Akun anda tidak terdaftar!";
 																session_unset($_SESSION['login']);
-															} 
+															}
 														?>
 													</p>
 
@@ -129,6 +129,7 @@
 
 											<form method="post" action="action/lupa_kata_sandi.php" class="myform">
 												<fieldset>
+													<input type="hidden" name="log_user" value="pel" placeholder="">
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
 															<input type="email" class="form-control" name="email" placeholder="Email" required/>
@@ -260,7 +261,7 @@
 		<script type="text/javascript">
 			if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 		</script>
-		
+
 		<script src="assets/js/bootstrap.min.js"></script>
 		<script src="assets/js/jquery-ui.custom.min.js"></script>
 
@@ -269,26 +270,26 @@
 		<script src="assets/js/jquery.gritter.min.js"></script>
 
 		<script>
-			
-			// LOADING SCREEN WHILE PROCESS SAVING/UPDATE/DELETE DATA 
+
+			// LOADING SCREEN WHILE PROCESS SAVING/UPDATE/DELETE DATA
 			$(document).ready(function(){
 
 				//Callback handler for form submit event
 				$(".myform").submit(function(e)
 				{
-			
+
 				var formObj = $(this);
 				var formURL = formObj.attr("action");
 				var formData = new FormData(this);
 				$.ajax({
 					url: formURL,
 					type: 'POST',
-					data:  formData,        
+					data:  formData,
 					contentType: false,
 					cache: false,
 					processData:false,
 					beforeSend: function (){
-							$("#loading").show(1000).html("<img src='assets/images/loading.gif' height='100'>");                   
+							$("#loading").show(1000).html("<img src='assets/images/loading.gif' height='100'>");
 							},
 					success: function(data, textStatus, jqXHR){
 							$("#result").html(data);
@@ -297,11 +298,11 @@
 							$('#mytable').DataTable().ajax.reload();
 					},
 						error: function(jqXHR, textStatus, errorThrown){
-				}         
+				}
 				});
 					e.preventDefault(); //Prevent Default action.
 					e.unbind();
-				});    
+				});
 
 			});
 		</script>
@@ -316,33 +317,33 @@
 				$(target).addClass('visible');//show target
 			 });
 			});
-			
-			
-			
+
+
+
 			//you don't need this, just used for changing background
 			jQuery(function($) {
 			 $('#btn-login-dark').on('click', function(e) {
 				$('body').attr('class', 'login-layout');
 				$('#id-text2').attr('class', 'white');
 				$('#id-company-text').attr('class', 'blue');
-				
+
 				e.preventDefault();
 			 });
 			 $('#btn-login-light').on('click', function(e) {
 				$('body').attr('class', 'login-layout light-login');
 				$('#id-text2').attr('class', 'grey');
 				$('#id-company-text').attr('class', 'blue');
-				
+
 				e.preventDefault();
 			 });
 			 $('#btn-login-blur').on('click', function(e) {
 				$('body').attr('class', 'login-layout blur-login');
 				$('#id-text2').attr('class', 'white');
 				$('#id-company-text').attr('class', 'light-blue');
-				
+
 				e.preventDefault();
 			 });
-			 
+
 			});
 		</script>
 	</body>

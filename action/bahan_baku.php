@@ -14,7 +14,7 @@ if ($id_bahan_baku=='') {
     $init = 'BB';
 
     // retrieve ID terakhir yg tersimpan
-    $sql = "SELECT id_bahan_baku 
+    $sql = "SELECT id_bahan_baku
             FROM bahan_baku
             ORDER BY id_bahan_baku DESC
             LIMIT 1";
@@ -24,11 +24,11 @@ if ($id_bahan_baku=='') {
         $id_terakhir_tersimpan = $data['id_bahan_baku'];
     }else{
         $id_terakhir_tersimpan = '000'.$init;
-    }        
+    }
 
     // panggil fungsi generate kode
     $id_bahan_baku = buat_kode($id_terakhir_tersimpan, $init);
-    
+
     // simpan data
     $sql = "INSERT INTO bahan_baku (id_bahan_baku, nama_bahan_baku, satuan)
             VALUES ('$id_bahan_baku', '$nama_bahan_baku', '$satuan')";
@@ -39,7 +39,7 @@ if ($id_bahan_baku=='') {
     }
 }else if($id_bahan_baku!='' AND empty(mysqli_escape_string($conn, trim($_POST['hapus'])))){
     // perbaharui data
-    $sql = "UPDATE bahan_baku 
+    $sql = "UPDATE bahan_baku
             SET nama_bahan_baku='$nama_bahan_baku', satuan='$satuan'
             WHERE id_bahan_baku='$id_bahan_baku'";
     if(mysqli_query($conn, $sql)){
