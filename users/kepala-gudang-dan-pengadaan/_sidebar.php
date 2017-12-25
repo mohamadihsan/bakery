@@ -76,15 +76,6 @@
 			<b class="arrow"></b>
 		</li>
 
-		<li class="<?php if($menu=='kendaraan') echo "active"; ?>">
-			<a href="./index.php?menu=kendaraan">
-				<i class="menu-icon fa fa-truck"></i>
-				<span class="menu-text"> Kendaraan </span>
-			</a>
-
-			<b class="arrow"></b>
-		</li>
-
 	</ul><!-- /.nav-list -->
 
 	<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">

@@ -71,10 +71,6 @@ switch ($jabatan) {
 					include_once '../users/kepala-gudang-dan-pengadaan/produk.php';
 					break;
 
-				case 'kendaraan':
-					include_once '../users/kepala-gudang-dan-pengadaan/kendaraan.php';
-					break;
-
 				case 'supplier':
 					include_once '../users/kepala-gudang-dan-pengadaan/supplier.php';
 					break;
@@ -141,6 +137,10 @@ switch ($jabatan) {
 
 				case 'distribusi':
 					include_once '../users/kepala-pemasaran/distribusi.php';
+					break;
+
+				case 'kendaraan':
+					include_once '../users/kepala-gudang-dan-pengadaan/kendaraan.php';
 					break;
 
 				case 'pemesanan':

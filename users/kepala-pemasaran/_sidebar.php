@@ -12,7 +12,7 @@
 
 			<b class="arrow"></b>
 		</li>
-		
+
 		<li class="<?php if($menu=='produk') echo "active"; ?>">
 			<a href="./index.php?menu=produk">
 				<i class="menu-icon fa fa-cube"></i>
@@ -35,6 +35,15 @@
 			<a href="./index.php?menu=pemesanan">
 				<i class="menu-icon fa fa-file-text"></i>
 				<span class="menu-text"> Pemesanan Produk </span>
+			</a>
+
+			<b class="arrow"></b>
+		</li>
+
+		<li class="<?php if($menu=='kendaraan') echo "active"; ?>">
+			<a href="./index.php?menu=kendaraan">
+				<i class="menu-icon fa fa-truck"></i>
+				<span class="menu-text"> Kendaraan </span>
 			</a>
 
 			<b class="arrow"></b>
